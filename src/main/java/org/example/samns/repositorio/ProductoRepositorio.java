@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ProductoRepositorio implements Repositorio<Producto>{
 
     private Connection getConection() throws SQLException {
@@ -40,6 +41,7 @@ public class ProductoRepositorio implements Repositorio<Producto>{
     }
 
     private static Producto getProducto(ResultSet resultSet) throws SQLException {
+
         Producto producto = new Producto();
         producto.setId(resultSet.getLong("id"));
         producto.setNombre(resultSet.getString("nombre"));
@@ -104,13 +106,11 @@ public class ProductoRepositorio implements Repositorio<Producto>{
 
             }
 
-           int verificas =  stmt.executeUpdate();
-
-            System.out.println("Verificas: " + verificas);
+            stmt.executeQuery();
 
         }catch (Exception e){
 
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -125,7 +125,7 @@ public class ProductoRepositorio implements Repositorio<Producto>{
 
         }catch (Exception e) {
 
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
     }
 }
