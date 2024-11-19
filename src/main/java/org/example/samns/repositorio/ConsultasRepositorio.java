@@ -47,4 +47,5 @@ public class ConsultasRepositorio {
         return producto;
     }
 
+
 }

@@ -80,9 +80,54 @@ public class EjemploJDBC {
 
     private static void listarProductos(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
 
-            List<Producto> productos = new ArrayList<>();
-            productos = getRepositorio().listar();
+        System.out.println("********************************");
+        System.out.println("******LISTAR PRODUCTOS******");
+
+        System.out.println("*****Elija como quiere que se le listen los productos");
+
+        System.out.println("1). Por orden de fecha de manera descendente");
+        System.out.println("2). Por orden de fecha de manera ascendente");
+        System.out.println("3). Por precio de manera ascendente");
+        System.out.println("4). Por precio de manera descendente");
+        System.out.println("5). Listar todos los productos");
+
+        int opcion = 0;
+
+        try {
+
+            opcion = scanner.nextInt();
+
+        }catch (InputMismatchException e) {
+
+            System.out.println("Tiene que ingresar una de las ocpiones presentadas del 1-5");
+            System.out.println(e.getMessage());
+            main(args);
+
+        }
+
+
+        List<Producto> productos = new ArrayList<>();
+
+        System.out.println(opcion);
+
+        switch (opcion){
+
+            case 1: productos = getRepositorio().obtenerProductosByfechaDesc();
+                    break;
+
+            case 2: productos = getRepositorio().obtenerProductosByfechaAsc();
+                    break;
+
+            case 3: productos = getRepositorio().obtenerProductosByPrecioAsc();
+                    break;
+
+            case 4: productos = getRepositorio().obtenerProductosByPrecioDesc();
+                    break;
+
+            default: productos = getRepositorio().listar();
+        }
 
             productos.forEach(producto -> {
                 System.out.println("Producto: " + producto.getId());
@@ -93,12 +138,9 @@ public class EjemploJDBC {
 
             main(args);
 
-
-
     }
 
     private static void actualizarProducto(String[] args) {
-
 
             Scanner scanner = new Scanner(System.in);
 
@@ -193,7 +235,7 @@ public class EjemploJDBC {
 
         Optional<Producto> producto = getConsultas().verificarProducto(id_producto);
 
-        if(producto.isPresent()){
+        if(producto != null){
 
             getRepositorio().eliminar(id_producto);
             System.out.println("El producto a sido eliminado satisfactoriamente");

@@ -119,7 +119,6 @@ public class ProductoRepositorio implements Repositorio<Producto>{
     public void eliminar(long id) {
 
         try(PreparedStatement stmt = getConection().prepareStatement("DELETE FROM \"java-curso\" where id = ?")){
-
             stmt.setLong(1 , id);
             stmt.execute();
 
@@ -128,4 +127,100 @@ public class ProductoRepositorio implements Repositorio<Producto>{
             System.out.println(e.getMessage());;
         }
     }
+
+    public List<Producto> obtenerProductosByfechaDesc(){
+
+        List<Producto> productos = new ArrayList<>();
+
+
+        try(Statement stmt = getConection().createStatement();
+            ResultSet resultSet = stmt.executeQuery("select * from \"java-curso\" order by fecha_registro desc")){
+
+            while(resultSet.next()){
+
+                Producto producto = getProducto(resultSet);
+                productos.add(producto);
+
+            }
+
+        }catch (Exception e){
+
+            System.out.println(e.getMessage());
+        }
+
+        return productos;
+    }
+
+    public List<Producto> obtenerProductosByfechaAsc(){
+
+        List<Producto> productos = new ArrayList<>();
+
+        try(Statement stmt = getConection().createStatement();
+            ResultSet resultSet = stmt.executeQuery("select * from \"java-curso\" order by fecha_registro asc")){
+
+
+            while(resultSet.next()){
+
+                Producto producto = getProducto(resultSet);
+                productos.add(producto);
+
+            }
+
+        }catch (Exception e){
+
+            productos = null;
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+        return productos;
+    }
+
+    public List<Producto> obtenerProductosByPrecioAsc(){
+
+        List<Producto> productos = new ArrayList<>();
+
+        try(Statement stmt = getConection().createStatement();
+            ResultSet resultSet = stmt.executeQuery("select * from \"java-curso\" order by precio asc")){
+
+            while(resultSet.next()){
+
+                Producto producto = getProducto(resultSet);
+                productos.add(producto);
+
+            }
+
+        }catch (Exception e){
+
+            System.out.println(e.getMessage());
+        }
+
+        return productos;
+    }
+
+    public List<Producto> obtenerProductosByPrecioDesc(){
+
+        List<Producto> productos = new ArrayList<>();
+
+
+        try(Statement stmt = getConection().createStatement();
+            ResultSet resultSet = stmt.executeQuery("select * from \"java-curso\" order by precio desc")){
+
+            while(resultSet.next()){
+
+                Producto producto = getProducto(resultSet);
+                productos.add(producto);
+
+            }
+
+        }catch (Exception e){
+
+            System.out.println(e.getMessage());
+        }
+
+        return productos;
+    }
+
 }
